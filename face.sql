@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2024 at 01:37 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 7.4.33
+-- Generation Time: Sep 19, 2024 at 04:37 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -65,6 +65,7 @@ INSERT INTO `data_personal` (`id`, `space_id`, `personal_id`, `name`, `surname`,
 
 CREATE TABLE `data_space` (
   `id` int(11) NOT NULL,
+  `space_code` varchar(13) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,8 +73,8 @@ CREATE TABLE `data_space` (
 -- Dumping data for table `data_space`
 --
 
-INSERT INTO `data_space` (`id`, `name`) VALUES
-(1, 'วิทยาลัยอาชีวศึกษาร้อยเอ็ด');
+INSERT INTO `data_space` (`id`, `space_code`, `name`) VALUES
+(1, '1345016201', 'วิทยาลัยอาชีวศึกษาร้อยเอ็ด');
 
 -- --------------------------------------------------------
 
@@ -117,7 +118,7 @@ CREATE TABLE `user_data` (
 
 INSERT INTO `user_data` (`id`, `username`, `password`, `email`, `name`, `surname`, `user_type_id`, `picture`, `active`) VALUES
 (1, 'admin', '25d55ad283aa400af464c76d713c07ad', 'noppol.ins@bncc.ac.th', 'นพพล', 'อินศร', 1, 'YWRtaW4=.jpg', '1'),
-(3, 'noppol', '8689391a8b93cd2d55ccf3f436eef4e2', 'noppol@rvc.ac.th', 'อาจารย์นพพล', 'อินศร', 3, 'bm9wcG9s.jpg', '1');
+(3, 'noppol', '8689391a8b93cd2d55ccf3f436eef4e2', 'noppol@rvc.ac.th', 'อาจารย์นพพล', 'อินศร', 2, 'bm9wcG9s.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -136,12 +137,8 @@ CREATE TABLE `user_type` (
 --
 
 INSERT INTO `user_type` (`id`, `type_name`, `active_menu`) VALUES
-(1, 'admin', 'admin,\ncourses,\nuser_menu'),
-(2, 'user', 'courses_enroll,\r\nuser_menu'),
-(3, 'teacher', 'courses_teaching,\r\nuser_menu'),
-(4, 'student', 'courses_enroll,\r\nuser_menu,'),
-(5, 'CVM', 'cvm_management,\r\nuser_menu'),
-(6, 'admin_school', 'admin_school,\r\nuser_menu');
+(1, 'admin', 'face_admin,admin,user_menu'),
+(2, 'user', 'courses_enroll,\r\nuser_menu');
 
 --
 -- Indexes for dumped tables

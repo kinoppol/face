@@ -15,13 +15,13 @@ $menu['จัดการระบบ']=array(
                 'url'=>site_url('management/user_type'),
             ),
         ),
-    ),
+    ),/*
     'cvm_group'=>array(
         'label'=>'ผู้ใช้ CVM',
         'bullet'=>'tf-icons bx bx-id-card',
         'url'=>site_url('cvm/user_cvm'),
         'item'=>array(),
-    ),
+    ),*/
     'config'=>array(
         'label'=>'ตั้งค่าการทำงาน',
         'url'=>site_url('config'),
