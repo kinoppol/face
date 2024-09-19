@@ -1,64 +1,59 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-require_once('function.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+date_default_timezone_set('Asia/Bangkok');
+require_once('framework/fw.php');
+require_once('conf/db.php');
 
-function redirect_on_error(){
-    $debug_mode=true;
-    if($debug_mode){
-        ini_set('display_errors', '1');
-        ini_set('display_startup_errors', '1');
-        error_reporting(E_ALL);
+$controller_guest_allowed=array(
+    'login',
+    'register',
+    'showcase',
+    'showcourses'
+);
+
+$controller=null;
+$function=null;
+$param=array();
+
+if(!empty($_GET['p'])){
+    $p=$_GET['p'];
+    //$pv = strrev($p); 
+    $seg = explode('/', $p); 
+
+    $param_pos = null;
+    foreach ($seg as $key => $value) {
+        if(is_dir($value)) {
+            $controller .= $value.'/';
+        } else {
+            $controller .= $value;
+            if(count($seg)>$key+1)$function=$seg[$key+1];
+            if(count($seg)>$key+2)$param_pos=$key+2;
+            break;
+        }
     }
-    if(!$debug_mode&&!defined('EVERYTHING_WENT_OK')){
-        ob_end_clean();
-        //header('Location: error.php');
-        print view('_error/error404');
+    if(!empty($param_pos)){
+        $k=null;
+        foreach (array_slice($seg,$param_pos) as $key => $value) {
+            if($key%2==0){
+                $k = $value;
+            } else {
+                $param[$k] = $value;
+            }
+        }
     }
 }
-
-
-register_shutdown_function('redirect_on_error');
-
-ob_start();
-session_start();
-
-    require_once('conf/db.php');
-    
-    if(!empty($_GET['p'])){
-    $p=$_GET['p'];
-    $seg=explode('/',$p);
-    $controller=$seg[0];
-    if(!empty($seg[1]))$function=$seg[1];
-    }
-
     if(empty($controller)){
-        $controller='showcase';
+        $controller='login';
     }
-
-    $controller_guest_allowed=array('login',
-                                    'register',
-                                    'showcase',
-                                    //'home'
-                                 );
     
     if(empty($_SESSION['user'])&&!is_numeric(array_search($controller,$controller_guest_allowed))){
-        print "Restrict access.";
+        //print "Restrict access.";
+        print "<b>ท่านยังไม่ได้เข้าสู่ระบบ</b><br>
+        ระบบกำลังพาไปหน้าเข้าสู่ระบบ โปรดรอสักครู่..";
         print redirect(site_url('login'),2);
         exit();
     }
-
-    $inc_file='controller/'.$controller.'.php';
-    
-    require_once($inc_file);
-
-    $page=new $controller();
-
-    if(empty($function)){
-        print $page->index();
-    }else{
-        print $page->$function();
-    }
+    fw_run($controller,$function,$param);
     define('EVERYTHING_WENT_OK', TRUE);
-?>
