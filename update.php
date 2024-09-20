@@ -4,8 +4,8 @@ require_once "zip.php";
 define('UPDATER_PATH', str_replace('\\','/',dirname(__FILE__)).'/');
 print UPDATER_PATH;
 //exit();
-$url = "https://github.com/kinoppol/tp/archive/refs/heads/main.zip";
-$zip_file = UPDATER_PATH."/update/tp.zip";
+$url = "https://github.com/kinoppol/face/archive/refs/heads/main.zip";
+$zip_file = UPDATER_PATH."/update/face.zip";
 
 $zip_resource = fopen($zip_file, "w");
 
@@ -39,5 +39,5 @@ if($zip->open($zip_file) != "true")
  exit();
 } 
 
-$zip->extractSubdirTo($extractPath,'tp-main/');
+$zip->extractSubdirTo($extractPath,'face-main/');
 $zip->close();
