@@ -1,7 +1,7 @@
 <?php
 helper("model/dummy_model");
-class labeled_image extends dummy_model{
-    protected $table = 'data_labeled_image';
+class labeled_face extends dummy_model{
+    protected $table = 'data_face';
     protected $primary_key = 'id';
     function __construct($db_ref){
         parent::__construct($db_ref);
