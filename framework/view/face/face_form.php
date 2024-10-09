@@ -77,25 +77,48 @@ if(!empty($face_data['id'])){
                             $df=false;
                             print_r($face_data);
                             if(!empty($face_data['space_id']))$df=$face_data['space_id'];
+                            else {
+                              if(!empty($_SESSION['resent_space_id']))$df=$_SESSION['resent_space_id'];
+                            }
                             print gen_option($space,$df);
                           ?>
                         </select>
 
               </div>
             </div>
-
-          <div class="mb-3 col-12">
+<?php
+  for($i=1;$i<=5;$i++){
+    ?>
+    
+    <div class="mb-3 col-12">
             <div class="form-floating">
                 <div class="mb-3">
-                        <label for="formFile" class="form-label">ภาพใบหน้า</label>
-                        <input class="form-control" type="file" id="formFile" name="face_image"/>
-                      </div>
+                  <?php
+    if(empty($face_data['labeled_image_'.$i])){
+    ?>
+                        <label for="formFile" class="form-label">ภาพใบหน้า #<?php print $i; ?></label>
+                        <input class="form-control" type="file" id="formFile" name="face_image_<?php print $i; ?>"/>
+                      
+    <?php
+    }else{
+      print 'รูปที่ #'.$i.' <img src="'.site_url('writable/labeled_images/'.$face_data['labeled_image_'.$i],true).'" width="50" class="rounded-circle" />
+            <a href="'.site_url('face/delete_labeled_image/id/'.$face_data['id'].'/no/'.$i.'/file_name/'.$face_data['labeled_image_'.$i]).'"
+            onclick="return confirm(\'ยืนยันลบรูป #'.$i.'\')"
+            class="btn btn-outline-danger">
+              <span class="tf-icons bx bx-trash"></span>&nbsp;ลบ
+            </a>
+        ';
+    }
+    ?>
+    </div>
               <div id="floatingInputHelp" class="form-text">
 
               </div>
             </div>
           </div>
-          
+    <?php
+  }
+?>
           <div class="row">
             <div class="d-grid gap-2 col-lg-6 col-md-12 mx-auto mt-3">
             </div>

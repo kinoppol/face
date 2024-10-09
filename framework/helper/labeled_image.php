@@ -39,5 +39,8 @@ function upload_labeled_image($picture=array()){
 
   $uploaded_file = upload_file($picture, $target_dir, $file_name);
 
-  return $target_dir.$file_name;
+  return array(
+            'location'=>$target_dir.$file_name,
+            'file_name'=>$file_name,
+        );
 }

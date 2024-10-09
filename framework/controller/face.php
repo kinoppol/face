@@ -23,7 +23,8 @@ class face{
     function add_face_form(){
         
         $space=model('space');
-        $space_data=$space->get();
+        $where=array('working_status'=>'ACTIVE');
+        $space_data=$space->get($where);
         $sp_arr=array();
             foreach($space_data as $sp){
                 $sp_arr[$sp['id']]=$sp['name'];
@@ -37,7 +38,8 @@ class face{
     function edit_face($param){
         
         $space=model('space');
-        $space_data=$space->get();
+        $where=array('working_status'=>'ACTIVE');
+        $space_data=$space->get($where);
         $sp_arr=array();
             foreach($space_data as $sp){
                 $sp_arr[$sp['id']]=$sp['name'];
@@ -56,6 +58,7 @@ class face{
 
 
     function save_face(){
+        $_SESSION['resent_space_id']=$_POST['space_id'];
         $data=array(
                     'space_id'=>$_POST['space_id'],
                     'personal_id'=>$_POST['personal_id'],
@@ -63,10 +66,27 @@ class face{
                     'surname'=>$_POST['surname'],
                 );
 
-        if($_FILES["face_image"]['size'] > 0){
-            helper('labeled_image');
-            $file_name=upload_labeled_image($_FILES["face_image"]);
-            
+                helper('labeled_image');
+
+        if(!empty($_FILES["face_image_1"])&&$_FILES["face_image_1"]['size'] > 0){
+            $labeled_image_1=upload_labeled_image($_FILES["face_image_1"]);
+            $data['labeled_image_1']=$labeled_image_1['file_name'];
+        }
+        if(!empty($_FILES["face_image_2"])&&$_FILES["face_image_2"]['size'] > 0){
+            $labeled_image_2=upload_labeled_image($_FILES["face_image_2"]);
+            $data['labeled_image_2']=$labeled_image_2['file_name'];
+        }
+        if(!empty($_FILES["face_image_3"])&&$_FILES["face_image_3"]['size'] > 0){
+            $labeled_image_3=upload_labeled_image($_FILES["face_image_3"]);
+            $data['labeled_image_3']=$labeled_image_3['file_name'];
+        }
+        if(!empty($_FILES["face_image_4"])&&$_FILES["face_image_4"]['size'] > 0){
+            $labeled_image_4=upload_labeled_image($_FILES["face_image_4"]);
+            $data['labeled_image_4']=$labeled_image_4['file_name'];
+        }
+        if(!empty($_FILES["face_image_5"])&&$_FILES["face_image_5"]['size'] > 0){
+            $labeled_image_5=upload_labeled_image($_FILES["face_image_5"]);
+            $data['labeled_image_5']=$labeled_image_5['file_name'];
         }
         //exit();
         $face=model('labeled_face');
@@ -92,5 +112,16 @@ class face{
 
         
         return redirect(site_url('face/list'));
+    }
+    function delete_labeled_image($param){
+
+        $face=model('labeled_face');
+        $where=array(
+            'id'=>$param['id'],
+        );
+        $data['labeled_image_'.$param['no']]='';
+        $face->update($data,$where);
+        unlink('writable/labeled_images/'.$param['file_name']);
+        return redirect(site_url('face/edit_face/id/'.$param['id']));
     }
 }

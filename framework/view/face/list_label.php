@@ -15,6 +15,7 @@
                                   <th>รหัสประจำตัว</th>
                                   <th>ชื่อ</th>
                                   <th>รูปใบหน้า</th>
+                                  <th>% ความสมบูรณ์</th>
                                   <th>จัดการ</th>
                               </tr>
                           </thead>
@@ -29,7 +30,51 @@
                                       <td><?php print $fd['personal_id']; ?>
                                   <td><?php print $fd['name'].' '.$fd['surname']; ?>
                                   </td>
-                                  <td><?php print $fd['labeled_image']; ?>
+                                  <td>
+                                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                    <?php 
+                                    $pic_counta=0;
+                                  for($i=1;$i<=5;$i++){
+                                    if(!empty($fd['labeled_image_'.$i])){
+                                        $pic_counta++;
+                                        print '<li
+                                                data-bs-toggle="tooltip"
+                                                data-popup="tooltip-custom"
+                                                data-bs-placement="top"
+                                                class="avatar avatar-xs pull-up"
+                                                title="'.$fd['name'].' #'.$i.'"
+                                                >';
+                                        print '<img src="'.site_url('writable/labeled_images/'.$fd['labeled_image_'.$i],true).'" class="rounded-circle" />';
+                                        print '</li>';
+                                        }
+                                  }
+                                  ?>
+                                  </ul>
+                                  </td>
+                                  <td>
+                                  <div class="progress">
+                                  <div
+                                  <?php
+                                    $percentage=$pic_counta/5*100;
+                                    $bg_color=array(
+                                        '0'=>'bg-danger',
+                                        '1'=>'bg-danger',
+                                        '2'=>'bg-warning',
+                                        '3'=>'bg-warning',
+                                        '4'=>'bg-primary',
+                                        '5'=>'bg-success',
+                                    );
+                                  ?>
+                        class="progress-bar <?php print $bg_color[$pic_counta]; ?>"
+                        role="progressbar"
+                        style="width: <?php print $percentage; ?>%"
+                        aria-valuenow="<?php print $percentage; ?>"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >
+                      <?php print $percentage; ?>%
+                      </div>
+                      </div>
                                   </td>
                                   <td>
                                       <div class="dropdown">
