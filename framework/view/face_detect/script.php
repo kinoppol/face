@@ -22,7 +22,7 @@ async function start(){
     document.getElementById('imageUpload').disabled = false;
 
     imageUpload.addEventListener('change', async () => {
-    nldiv.innerHTML="";
+    nldiv.innerHTML='';
         if (image) image.remove()
         if (canvas) canvas.remove()
         image = await faceapi.bufferToImage(imageUpload.files[0])
