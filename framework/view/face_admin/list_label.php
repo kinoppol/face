@@ -2,7 +2,7 @@
               <div class="card">
                   <h5 class="card-header">ข้อมูลใบหน้า</h5>
                   <div class="card-body">
-                      <a href="<?= site_url('face/add_face_form') ?>"
+                      <a href="<?= site_url('face_admin/add_face_form') ?>"
                           class="btn btn-success">+
                           เพิ่มข้อมูลใบหน้า
                       </a>
@@ -84,7 +84,7 @@
                                           </button>
                                           <div class="dropdown-menu">
                                               <a class="dropdown-item"
-                                                  href="<?php print site_url('face/edit_face/id/'.$fd['id']); ?>"><i
+                                                  href="<?php print site_url('face_admin/edit_face/id/'.$fd['id']); ?>"><i
                                                       class="bx bx-edit-alt me-1"></i> Edit</a>
                                               <a class="dropdown-item"
                                                   href="javascript:deleteFace(<?php print $fd['id']; ?>)"><i
@@ -105,7 +105,7 @@
                 function deleteFace(id) {
                     var ask = window.confirm("ยืนยันการลบข้อมูลรูป?");
                     if (ask) {
-                        window.location.href = "<?php print site_url('face/delete_face/id/')?>"+id;
+                        window.location.href = "<?php print site_url('face_admin/delete_face/id/')?>"+id;
 
                     }
                 }

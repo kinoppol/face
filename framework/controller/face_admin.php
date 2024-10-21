@@ -1,5 +1,5 @@
 <?php
-class face{
+class face_admin{
     function index(){
     }
     function list(){
@@ -16,7 +16,7 @@ class face{
 
         $data['space']=$sp_arr;
         $data['face']=$face_data;
-        $data['content']=view('face/list_label',$data);
+        $data['content']=view('face_admin/list_label',$data);
         $data['title']='ฐานข้อมูลใบหน้า';
         return view('_template/main',$data);
     }
@@ -31,7 +31,7 @@ class face{
             }
             
         $data['space']=$sp_arr;
-        $data['content']=view('face/face_form',$data);
+        $data['content']=view('face_admin/face_form',$data);
         $data['title']='เพิ่มข้อมูลใบหน้า';
         return view('_template/main',$data);
     }
@@ -51,7 +51,7 @@ class face{
         $face_data=$face->get($where);
         $data['face_data']=$face_data[0];
         $data['space']=$sp_arr;
-        $data['content']=view('face/face_form',$data);
+        $data['content']=view('face_admin/face_form',$data);
         $data['title']='แก้ไขข้อมูลใบหน้า';
         return view('_template/main',$data);
     }
@@ -99,7 +99,7 @@ class face{
             $face->update($data,$where);
         }
         
-        return redirect(site_url('face/list'));
+        return redirect(site_url('face_admin/list'));
     }
     function delete_face($param){
             
@@ -111,7 +111,7 @@ class face{
             $face->delete($where);
 
         
-        return redirect(site_url('face/list'));
+        return redirect(site_url('face_admin/list'));
     }
     function delete_labeled_image($param){
 
@@ -122,6 +122,6 @@ class face{
         $data['labeled_image_'.$param['no']]='';
         $face->update($data,$where);
         unlink('writable/labeled_images/'.$param['file_name']);
-        return redirect(site_url('face/edit_face/id/'.$param['id']));
+        return redirect(site_url('face_admin/edit_face/id/'.$param['id']));
     }
 }
